@@ -24,7 +24,7 @@ export const WeatherProvider = ({ children }) => {
 
     const fetchWeatherData = async () => {
         try {
-            const res = await fetch('https://cors-anywhere.herokuapp.com/https://samples.openweathermap.org/data/2.5/forecast?q=M%C3%BCnchen,DE&appid=b6907d289e10d714a6e88b30761fae22');
+            const res = await fetch('/data/2.5/forecast?q=M%C3%BCnchen,DE&appid=b6907d289e10d714a6e88b30761fae22');
     
             if (!res.ok) {
                 const message = `An error has occured: ${res.status}`;
@@ -49,8 +49,7 @@ export const WeatherProvider = ({ children }) => {
 
                 }
             })
-
-            setWeather(data);
+            setWeather((prev) => data);
         } catch (error) {
             console.log(error);
         }
