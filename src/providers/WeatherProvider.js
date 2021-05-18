@@ -8,19 +8,7 @@ export const WeatherProvider = ({ children }) => {
     const[weather, setWeather] = useState([]);
     const[minTemp, setMinTemp] = useState(0);
     const[maxTemp, setMaxTemp] = useState(0);
-
-    // set min max temp for the day
-    useEffect(() => {
-        let minTemp = 0, maxTemp = 0;
-
-        weather.forEach((w) => {
-            if (w.temp > maxTemp) maxTemp = w.temp;
-            if (w.temp < minTemp) minTemp = w.temp;
-        });
-
-        setMaxTemp(maxTemp);
-        setMinTemp(minTemp);
-    }, [weather]);
+    const[selected, setSelected] = useState();
 
     const fetchWeatherData = async () => {
         try {
@@ -40,23 +28,42 @@ export const WeatherProvider = ({ children }) => {
                 return d.dt_txt.indexOf('2017-02-20') > -1;
             });
 
-            // note: temp_max, temp_min is wrong, will be calculated it in provider
+            // note: temp_max, temp_min is wrong, will be calculated later
             data = data.map((d) => {
                 return {
                     date: new Date(d.dt * 1000),
-                    temp: d.main.temp - 273.15,
+                    temp: (d.main.temp - 273.15).toFixed(2),
                     sky: d.weather && d.weather.length > 0 ? d.weather[0].main : 'None',
+                    selected: false
 
                 }
-            })
-            setWeather((prev) => data);
+            });
+
+            setWeather(prev => data);
+
+            let minTemp = 0, maxTemp = 0;
+
+            data.forEach((w) => {
+                if (w.temp > maxTemp) maxTemp = w.temp;
+                if (w.temp < minTemp) minTemp = w.temp;
+            });
+
+            // set min max temp for the day
+            setMaxTemp(maxTemp);
+            setMinTemp(minTemp);
+    
+            // set first data to selected
+            if (data && data.length) {
+                data[0].selected = true;
+                setSelected(prev => data[0]);
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
     return (
-        <WeatherContext.Provider value={{fetchWeatherData, weather, maxTemp, minTemp}}>
+        <WeatherContext.Provider value={{fetchWeatherData, weather, maxTemp, minTemp, selected}}>
             {children}
         </WeatherContext.Provider>
     )
