@@ -1,6 +1,8 @@
 .App {
-    text-align: center;
-    width: 100vw;
-    background-color: #262A59;
-  }
-  
+  text-align: center;
+  width: 100vw;
+  background-color: #262A59;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
