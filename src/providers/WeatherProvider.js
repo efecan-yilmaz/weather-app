@@ -1,10 +1,13 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
+import { useGadget } from './GadgetProvider';
+
 const WeatherContext = createContext();
 
 export const useWeather = () => useContext(WeatherContext);
 
 export const WeatherProvider = ({ children }) => {
+    const gadgetContext = useGadget();
     const[weather, setWeather] = useState([]);
     const[minTemp, setMinTemp] = useState(0);
     const[maxTemp, setMaxTemp] = useState(0);
@@ -16,10 +19,12 @@ export const WeatherProvider = ({ children }) => {
             return w;
         });
         setWeather(prev => newWeather);
+        if (selected && selected.date) gadgetContext.setAlert(prev => ({show: true, message: `Here is the weather for ${selected.date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit', hour12: false})}`, type: 'success'}));
     }, [selected]);
 
     const fetchWeatherData = async () => {
         try {
+            gadgetContext.setShowSpinner(true);
             const res = await fetch('/data/2.5/forecast?q=M%C3%BCnchen,DE&appid=b6907d289e10d714a6e88b30761fae22');
     
             if (!res.ok) {
@@ -65,8 +70,12 @@ export const WeatherProvider = ({ children }) => {
                 data[0].selected = true;
                 setSelected(prev => data[0]);
             }
+            
+            gadgetContext.setShowSpinner(false);
         } catch (error) {
             console.log(error);
+            gadgetContext.setAlert(prev => ({show: true, message: `An error occured! Run for the hills! ${error}`, type: 'danger'}));
+            gadgetContext.setShowSpinner(false);
         }
     }
 

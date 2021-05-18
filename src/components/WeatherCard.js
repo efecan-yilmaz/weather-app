@@ -24,7 +24,7 @@ const WeatherCard = ({weather}) => {
                 <Col className="font-regular">{weather.date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit', hour12: false})}</Col>
             </Row>
             <Row>
-                <Col><img width="120px" height="120px" src={weather.sky === 'Clouds' ? CloudIcon : SunnyIcon} /></Col>
+                <Col><img width="120px" className={weather.sky !== 'Clouds' ? 'svg-sun' : ''} height="120px" src={weather.sky === 'Clouds' ? CloudIcon : SunnyIcon} /></Col>
             </Row>
             <Row>
                 <Col className="font-big">{weather.temp}</Col>

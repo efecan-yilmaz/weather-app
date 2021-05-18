@@ -26,7 +26,7 @@ const DetailWeatherView = () => {
     return (
         <Container fluid className="main-container">
             <Row>
-                <Col><img width="328px" height="328px" src={selectedWeather.sky === 'Clouds' ? CloudIcon : SunnyIcon} /></Col>
+                <Col><img className={selectedWeather.sky !== 'Clouds' ? 'svg-sun' : ''} width="328px" height="328px" src={selectedWeather.sky === 'Clouds' ? CloudIcon : SunnyIcon} /></Col>
                 <Col l={6}>
                     <Container>
                         <Row>
