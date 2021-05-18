@@ -1,0 +1,24 @@
+.font-big {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 82.56px;
+}
+
+.font-regular {
+    color: #A8AABD;
+    font-weight: 400;
+    font-size: 47.78px;
+}
+
+.card-container:hover {
+    cursor: pointer;
+    background-color: rgba(81, 85, 122, 0.5);
+    border: 1px solid transparent;;
+    border-radius: 5px;
+}
+
+.card-selected {
+    background-color: rgba(81, 85, 122);
+    border: 1px solid transparent;;
+    border-radius: 5px;
+}

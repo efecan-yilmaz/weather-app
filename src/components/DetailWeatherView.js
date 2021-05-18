@@ -27,21 +27,21 @@ const DetailWeatherView = () => {
         <Container fluid className="main-container">
             <Row>
                 <Col><img width="328px" height="328px" src={selectedWeather.sky === 'Clouds' ? CloudIcon : SunnyIcon} /></Col>
-                <Col>
+                <Col l={6}>
                     <Container>
                         <Row>
-                            <Col className="font-regular text-left">{selectedWeather.sky === 'Clounds' ? 'Cloudy' : 'Clear'}</Col>
-                            <Col className="font-regular text-right">{`${maxTemp}° / ${minTemp}°`}</Col>
+                            <Col className="detail-font-regular text-left">{selectedWeather.sky === 'Clouds' ? 'Cloudy' : 'Clear'}</Col>
+                            <Col className="detail-font-regular text-right">{`${maxTemp}° / ${minTemp}°`}</Col>
                         </Row>
                         <Row>
-                            <Col className="font-big">{`${selectedWeather.temp}°`}</Col>
+                            <Col className="detail-font-big">{`${selectedWeather.temp ? selectedWeather.temp : '0'}°`}</Col>
                         </Row>
                     </Container>
                 </Col>
                 <Col>
                     <Container>
                         <Row>
-                            <Col className="font-regular text-left">Munich</Col>
+                            <Col className="detail-font-regular text-left">Munich</Col>
                         </Row>
                         <Row>
                             <Col className="font-date text-left">{selectedWeather.date ? selectedWeather.date.toLocaleDateString(navigator.language, {weekday:'long'}) : ''}</Col>

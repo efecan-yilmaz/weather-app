@@ -10,6 +10,14 @@ export const WeatherProvider = ({ children }) => {
     const[maxTemp, setMaxTemp] = useState(0);
     const[selected, setSelected] = useState();
 
+    useEffect(() => {
+        let newWeather = weather.map((w) => {
+            w.selected = w.date === selected.date;
+            return w;
+        });
+        setWeather(prev => newWeather);
+    }, [selected]);
+
     const fetchWeatherData = async () => {
         try {
             const res = await fetch('/data/2.5/forecast?q=M%C3%BCnchen,DE&appid=b6907d289e10d714a6e88b30761fae22');
@@ -32,7 +40,7 @@ export const WeatherProvider = ({ children }) => {
             data = data.map((d) => {
                 return {
                     date: new Date(d.dt * 1000),
-                    temp: (d.main.temp - 273.15).toFixed(2),
+                    temp: (d.main.temp - 273.15).toFixed(0),
                     sky: d.weather && d.weather.length > 0 ? d.weather[0].main : 'None',
                     selected: false
 
@@ -63,7 +71,7 @@ export const WeatherProvider = ({ children }) => {
     }
 
     return (
-        <WeatherContext.Provider value={{fetchWeatherData, weather, maxTemp, minTemp, selected}}>
+        <WeatherContext.Provider value={{fetchWeatherData, weather, maxTemp, minTemp, selected, setSelected}}>
             {children}
         </WeatherContext.Provider>
     )
