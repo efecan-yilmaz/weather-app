@@ -17,6 +17,7 @@ Simply go to the main directory and run the following command in the command lin
 Following frameworks and libraries were used in development:
 
 React https://reactjs.org/
+
 Bootstrap for React https://react-bootstrap.github.io/
 
 Developed by Efecan YILMAZ
